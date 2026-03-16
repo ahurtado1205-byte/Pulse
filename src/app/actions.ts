@@ -48,8 +48,7 @@ export async function logOperacionAction(data: any) {
   try {
     const op = await prisma.operacionDiaria.create({
       data: {
-        // En producción tomaríamos la fecha elegida por el usuario o UTC
-        fecha: new Date(new Date().toISOString().split('T')[0] + "T00:00:00Z"), 
+        fecha: new Date(new Date().setUTCHours(0,0,0,0)), 
         habitacionesVendidas: parseInt(data.occ) || 0,
         adrDiario: parseFloat(data.adr) || 0,
         nuevasReservas: parseInt(data.newRes) || 0,

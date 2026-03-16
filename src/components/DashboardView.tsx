@@ -98,10 +98,10 @@ export default function DashboardView({ latestData, history, hotelRooms }: Dashb
           </div>
         </div>
 
-        <div className="bg-slate-900/50 backdrop-blur border border-slate-800 p-5 rounded-2xl relative overflow-hidden flex flex-col justify-center border-l-4 border-l-rose-500">
-          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-1"><AlertTriangle size={12} className="text-rose-500"/> Alertas Pacing</h3>
-          <p className="text-sm font-semibold text-rose-200">
-            {history.length > 0 ? "Monitoreando tendencias de reserva..." : "Esperando ingreso de datos históricos."}
+        <div className="bg-slate-900/50 backdrop-blur border border-slate-800 p-5 rounded-2xl relative overflow-hidden flex flex-col justify-center">
+          <h3 className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mb-2 flex items-center gap-1">Status Destino</h3>
+          <p className="text-sm font-semibold text-slate-300">
+            {history.length > 0 ? "Monitoreando tendencias en tiempo real..." : "Esperando ingreso de datos históricos."}
           </p>
         </div>
       </div>
