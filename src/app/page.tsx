@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 import NightAuditorForm from "@/components/NightAuditorForm";
 import DashboardView from "@/components/DashboardView";
-import { User, Settings } from "lucide-react";
+import { User, Settings, LogOut } from "lucide-react";
+import { getDashboardDataAction, logoutAction } from "./actions";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 /**
  * MAIN DASHBOARD VIEW (Destino Consolidado)
@@ -18,7 +21,23 @@ import { User, Settings } from "lucide-react";
  * - Cabecera: Navegación hacia Login, Reportes, Configuración y Directorio.
  */
 export default function Home() {
+  const router = useRouter();
   const [latestData, setLatestData] = useState<any>(null);
+  const [hotelInfo, setHotelInfo] = useState<{name: string, rooms: number} | null>(null);
+  const [history, setHistory] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function init() {
+      const data = await getDashboardDataAction();
+      if (data.success) {
+        setHotelInfo({ name: data.hotelName, rooms: data.rooms });
+        setHistory(data.operaciones);
+      } else {
+        router.push("/login");
+      }
+    }
+    init();
+  }, [router]);
 
   const handleUpdateDashboard = (data: any) => {
     console.log("New data received from hotel:", data);
@@ -28,6 +47,11 @@ export default function Home() {
   const handleClearDashboard = () => {
     console.log("Dashboard data cleared");
     setLatestData(null);
+  };
+
+  const handleLogout = async () => {
+    await logoutAction();
+    router.push("/login");
   };
 
   return (
@@ -68,15 +92,18 @@ export default function Home() {
             <Link href="/settings" className="w-8 h-8 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-500 transition-all">
               <Settings size={14} />
             </Link>
-            <Link href="/login" className="px-3 py-1.5 rounded transition-colors text-xs font-semibold text-slate-400 hover:text-white border border-slate-700 hover:border-slate-500">
+            <button onClick={handleLogout} className="px-3 py-1.5 rounded transition-colors text-xs font-semibold text-slate-400 hover:text-white border border-slate-700 hover:border-slate-500 flex items-center gap-2">
+              <LogOut size={14} />
               Cerrar Sesión
-            </Link>
+            </button>
             <Link href="/admin" className="flex items-center gap-2 cursor-pointer group">
               <div className="w-8 h-8 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 group-hover:text-white group-hover:border-indigo-500 transition-all shadow-[0_0_10px_rgba(79,70,229,0.1)] group-hover:shadow-[0_0_15px_rgba(79,70,229,0.4)]">
                 <User size={14} />
               </div>
               <div className="hidden md:flex flex-col">
-                <span className="text-[10px] font-bold text-white leading-none group-hover:text-indigo-300 transition-colors">Hotel Costa Galana</span>
+                <span className="text-[10px] font-bold text-white leading-none group-hover:text-indigo-300 transition-colors">
+                  {hotelInfo?.name || "Cargando..."}
+                </span>
                 <span className="text-[9px] text-slate-500 font-mono">Panel Admin &rarr;</span>
               </div>
             </Link>
@@ -84,7 +111,7 @@ export default function Home() {
         </nav>
 
         {/* Dynamic View rendering based on state */}
-        <DashboardView latestData={latestData} />
+        <DashboardView latestData={latestData} history={history} hotelRooms={hotelInfo?.rooms || 0} />
 
       </div>
     </div>

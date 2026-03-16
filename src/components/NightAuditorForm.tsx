@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Check, Hotel, LogIn, Moon } from "lucide-react";
+import { logOperacionAction } from "@/app/actions";
+
 
 export default function NightAuditorForm({ onUpdateDashboard, onClearDashboard }: { onUpdateDashboard: (data: any) => void, onClearDashboard: () => void }) {
   const initialData = {
@@ -27,16 +29,25 @@ export default function NightAuditorForm({ onUpdateDashboard, onClearDashboard }
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API Call
-    setTimeout(() => {
-      onUpdateDashboard(formData);
+    try {
+      const result = await logOperacionAction(formData);
+      if (result.success) {
+        onUpdateDashboard(formData);
+        alert("✅ Datos impactados en destino correctamente.");
+        // Optional: Reset small parts of form or show success state
+      } else if (result.error) {
+        alert(`⚠️ ${result.error}`);
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert("⚠️ Error al guardar los datos opreacionales.");
+    } finally {
       setIsSubmitting(false);
-      // Reset form or show success toast
-    }, 800);
+    }
   };
 
   const handleClear = () => {

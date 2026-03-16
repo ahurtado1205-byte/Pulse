@@ -67,6 +67,34 @@ export async function logOperacionAction(data: any) {
   }
 }
 
+// Acción para obtener datos del Dashboard
+export async function getDashboardDataAction() {
+  const cookieStore = await cookies();
+  const hotelIdStr = cookieStore.get("hotelId")?.value;
+  
+  if (!hotelIdStr) return { success: false, error: "No sesion" };
+  const hotelId = parseInt(hotelIdStr);
+
+  const hotel = await prisma.hotel.findUnique({
+    where: { id: hotelId },
+    include: {
+      operaciones: {
+        orderBy: { fecha: 'desc' },
+        take: 7
+      }
+    }
+  });
+
+  if (!hotel) return { success: false, error: "Hotel no encontrado" };
+
+  return { 
+    success: true, 
+    hotelName: hotel.nombre,
+    rooms: hotel.habitaciones,
+    operaciones: hotel.operaciones 
+  };
+}
+
 // Acción para Cerrar Sesión
 export async function logoutAction() {
    const cookieStore = await cookies();

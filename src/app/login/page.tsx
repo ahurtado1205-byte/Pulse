@@ -3,9 +3,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Building, Check, KeySquare, ShieldCheck, User } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { loginAction, registerHotelAction } from "@/app/actions";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,17 +28,11 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      // Supabase Auth Integration
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: loginEmail,
-        password: loginPassword,
-      });
-
-      if (error) throw error;
-      
-      console.log("Sesión iniciada:", data);
-      alert("✅ Acceso autorizado. (Redirigiendo...)");
-      window.location.href = "/";
+      const result = await loginAction(loginEmail, loginPassword);
+      if (result.success) {
+        alert(`✅ Acceso autorizado para ${result.hotel}. (Redirigiendo...)`);
+        router.push("/");
+      }
     } catch (err: any) {
       console.error(err);
       alert(`⚠️ Error al iniciar sesión: ${err.message || 'Verifica tus credenciales'}`);
@@ -51,20 +47,19 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      // 1. Supabase Auth Integration (Sign Up)
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: regAdminEmail,
-        password: regAdminPassword,
+      const result = await registerHotelAction({
+        nombre: regHotelName,
+        habitaciones: regRooms,
+        categoria: regCategory,
+        adminEmail: regAdminEmail,
+        adminPassword: regAdminPassword
       });
 
-      if (authError) throw authError;
-
-      // 2. Aquí iría la lógica para insertar el Hotel en la DB
-      console.log("Administrador creado:", authData);
-      alert("✅ Propiedad registrada. (Requiere confirmación de email)");
-      
-      // Simulamos la redirección
-      setActiveTab("login");
+      if (result.success) {
+        alert("✅ Propiedad registrada exitosamente.");
+        setActiveTab("login");
+        setLoginEmail(regAdminEmail);
+      }
     } catch (err: any) {
       console.error(err);
       alert(`⚠️ Error al registrar: ${err.message || 'Intenta nuevamente'}`);
