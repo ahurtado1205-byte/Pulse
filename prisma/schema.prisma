@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Hotel {
+  id            Int               @id @default(autoincrement())
+  nombre        String
+  habitaciones  Int
+  categoria     String
+  adminEmail    String            @unique
+  adminPassword String
+  createdAt     DateTime          @default(now())
+  operaciones   OperacionDiaria[]
+}
+
+model OperacionDiaria {
+  id                   Int      @id @default(autoincrement())
+  fecha                DateTime
+  habitacionesVendidas Int      @default(0)
+  adrDiario            Float    @default(0)
+  nuevasReservas       Int      @default(0)
+  cancelaciones        Int      @default(0)
+  origenPredominante   String?
+  eventoAtractor       String?
+  hotelId              Int
+  hotel                Hotel    @relation(fields: [hotelId], references: [id])
+  createdAt            DateTime @default(now())
+
+  @@unique([fecha, hotelId])
+}
