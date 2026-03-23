@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pulse AHT - Hotel Financial Analysis SaaS
 
-## Getting Started
+Pulse AHT is a comprehensive SaaS platform designed for hotel financial analysis, enabling data-driven decision-making for hotel administrators and auditors.
 
-First, run the development server:
+## 🚀 Features
+- **Real-time KPI Dashboard**: Monitor PAR, EBITDA, EBITDAR and other critical hotel metrics.
+- **Interactive Data Visualization**: Dynamic charts using Recharts for trend analysis and financial performance.
+- **Night Auditor Forms**: Streamlined data entry for daily hotel operations.
+- **PDF Report Generation**: Professional PDF reports with premium branding using `jspdf`.
+- **User Authentication**: Secure login and management via Supabase.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Tech Stack
+- **Framework**: [Next.js 15+](https://nextjs.org/) (App Router)
+- **Database**: [Supabase](https://supabase.com/) & [Prisma](https://www.prisma.io/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Charts**: [Recharts](https://recharts.org/)
+- **PDF Generation**: [jsPDF](https://github.com/parallax/jsPDF)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📦 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
+- Node.js 18+
+- npm / pnpm / yarn
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ahurtado1205-byte/Pulse.git
+   cd Pulse
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables:
+   Create a `.env.local` file with your Supabase and Database connection strings.
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Learn More
+## 📄 License
+This project is private and intended for use by AHT-Pulse.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Built with ❤️ by [Pulse Team]
