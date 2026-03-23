@@ -46,7 +46,8 @@ The fastest way to deploy this application is using [Vercel](https://vercel.com/
 ### Steps to Deploy:
 1. **Push to GitHub**: Connect your GitHub repository to Vercel.
 2. **Environment Variables**: In the Vercel dashboard, add the following variables:
-   - `DATABASE_URL`: Your Supabase connection string for Prisma.
+   - `DATABASE_URL`: Your Supabase connection string (Transaction Mode).
+   - `DIRECT_URL`: Your Supabase connection string (Session Mode - for Migrations).
    - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase Project URL.
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase Anon Key.
 3. **Build Settings**: Vercel will automatically detect Next.js. The `postinstall` script will handle Prisma client generation.
