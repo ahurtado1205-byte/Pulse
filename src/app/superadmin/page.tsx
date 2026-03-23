@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from "next/image";
 import { ArrowLeft, Building2, Search, Filter, ShieldCheck, AlertCircle, SignalHigh, CheckCircle2 } from 'lucide-react';
 
 /**
@@ -28,8 +29,13 @@ export default function SuperAdminPage() {
       <nav className="border-b border-slate-800 bg-black/90 backdrop-blur h-14 flex-shrink-0 flex items-center justify-between px-6 z-50 sticky top-0">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3 border-r border-slate-700 pr-6">
-             <div className="w-8 h-8 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.3)] border border-amber-500/30 bg-amber-900/50 flex items-center justify-center">
-                 <ShieldCheck size={16} className="text-amber-400" />
+             <div className="relative w-8 h-8 flex items-center justify-center">
+               <Image 
+                 src="/logo.png" 
+                 alt="AHT Pulse Logo" 
+                 fill 
+                 className="object-contain shadow-[0_0_10px_rgba(245,158,11,0.3)] rounded-full"
+               />
              </div>
             <span className="font-bold text-sm tracking-widest uppercase text-white">Directorio<span className="text-amber-400">AHT</span></span>
           </div>

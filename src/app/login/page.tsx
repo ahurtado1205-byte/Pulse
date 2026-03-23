@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Building, Check, KeySquare, ShieldCheck, User } from "lucide-react";
 import { loginAction, registerHotelAction } from "@/app/actions";
 import { useRouter } from "next/navigation";
@@ -86,8 +87,13 @@ export default function LoginPage() {
           
           <div>
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-16 h-16 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.6)] border border-indigo-500/40 bg-indigo-900 flex items-center justify-center">
-                 <span className="text-2xl font-bold text-indigo-400">AHT</span>
+              <div className="relative w-16 h-16 flex items-center justify-center">
+                <Image 
+                  src="/logo.png" 
+                  alt="AHT Pulse Logo" 
+                  fill 
+                  className="object-contain shadow-[0_0_20px_rgba(99,102,241,0.6)] rounded-full"
+                />
               </div>
             </div>
             <h1 className="text-4xl font-black text-white tracking-tight leading-tight mb-4">

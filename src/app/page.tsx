@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import NightAuditorForm from "@/components/NightAuditorForm";
 import DashboardView from "@/components/DashboardView";
 import { User, Settings, LogOut } from "lucide-react";
@@ -65,8 +66,13 @@ export default function Home() {
         <nav className="border-b border-slate-800 bg-black/90 backdrop-blur h-14 flex-shrink-0 flex items-center justify-between px-6 z-50">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)] border border-indigo-500/30 bg-indigo-900/50 flex items-center justify-center">
-                 <span className="text-[10px] font-bold text-indigo-400">AHT</span>
+              <div className="relative w-8 h-8 flex items-center justify-center">
+                <Image 
+                  src="/logo.png" 
+                  alt="AHT Pulse Logo" 
+                  fill 
+                  className="object-contain shadow-[0_0_15px_rgba(99,102,241,0.5)] rounded-full"
+                />
               </div>
               <span className="font-bold text-sm tracking-widest uppercase text-indigo-500">Pulse<span className="text-white">AHT</span> <span className="text-[10px] text-slate-500 font-mono ml-1">v4.0</span></span>
             </div>
