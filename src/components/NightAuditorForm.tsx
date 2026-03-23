@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { Check, Hotel, LogIn, Moon } from "lucide-react";
 import { logOperacionAction } from "@/app/actions";
+import { DashboardFormData } from "@/types";
 
 
-export default function NightAuditorForm({ onUpdateDashboard, onClearDashboard }: { onUpdateDashboard: (data: any) => void, onClearDashboard: () => void }) {
-  const initialData = {
+export default function NightAuditorForm({ onUpdateDashboard, onClearDashboard }: { onUpdateDashboard: (data: DashboardFormData) => void, onClearDashboard: () => void }) {
+  const initialData: DashboardFormData = {
     occ: "",
     adr: "",
     newRes: "0",
@@ -42,7 +43,7 @@ export default function NightAuditorForm({ onUpdateDashboard, onClearDashboard }
       } else if (result.error) {
         alert(`⚠️ ${result.error}`);
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
       alert("⚠️ Error al guardar los datos opreacionales.");
     } finally {

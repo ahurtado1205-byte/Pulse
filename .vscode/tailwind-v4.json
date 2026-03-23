@@ -1,0 +1,21 @@
+{
+  "version": 1.1,
+  "atDirectives": [
+    {
+      "name": "@theme",
+      "description": "Define your theme in Tailwind CSS v4."
+    },
+    {
+      "name": "@custom-variant",
+      "description": "Define a custom variant in Tailwind CSS v4."
+    },
+    {
+      "name": "@utility",
+      "description": "Define a custom utility in Tailwind CSS v4."
+    },
+    {
+      "name": "@variant",
+      "description": "Define a custom variant in Tailwind CSS v4."
+    }
+  ]
+}

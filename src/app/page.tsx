@@ -7,6 +7,7 @@ import { User, Settings, LogOut } from "lucide-react";
 import { getDashboardDataAction, logoutAction } from "./actions";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { DashboardFormData, OperacionDiaria, HotelInfo } from "@/types";
 
 /**
  * MAIN DASHBOARD VIEW (Destino Consolidado)
@@ -22,16 +23,16 @@ import { useEffect } from "react";
  */
 export default function Home() {
   const router = useRouter();
-  const [latestData, setLatestData] = useState<any>(null);
-  const [hotelInfo, setHotelInfo] = useState<{name: string, rooms: number} | null>(null);
-  const [history, setHistory] = useState<any[]>([]);
+  const [latestData, setLatestData] = useState<DashboardFormData | null>(null);
+  const [hotelInfo, setHotelInfo] = useState<HotelInfo | null>(null);
+  const [history, setHistory] = useState<OperacionDiaria[]>([]);
 
   useEffect(() => {
     async function init() {
       const data = await getDashboardDataAction();
       if (data.success) {
-        setHotelInfo({ name: data.hotelName, rooms: data.rooms });
-        setHistory(data.operaciones);
+        setHotelInfo({ name: data.hotelName || "", rooms: data.rooms || 0 });
+        setHistory(data.operaciones || []);
       } else {
         router.push("/login");
       }
@@ -39,7 +40,7 @@ export default function Home() {
     init();
   }, [router]);
 
-  const handleUpdateDashboard = (data: any) => {
+  const handleUpdateDashboard = (data: DashboardFormData) => {
     console.log("New data received from hotel:", data);
     setLatestData(data);
   };

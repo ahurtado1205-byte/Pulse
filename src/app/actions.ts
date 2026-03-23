@@ -2,6 +2,15 @@
 
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
+import { DashboardFormData, OperacionDiaria } from "@/types";
+
+interface RegisterHotelData {
+  nombre: string;
+  habitaciones: string;
+  categoria: string;
+  adminEmail: string;
+  adminPassword: string;
+}
 
 // Acción para Iniciar Sesión de Hotel
 export async function loginAction(email: string, pass: string) {
@@ -20,7 +29,7 @@ export async function loginAction(email: string, pass: string) {
 }
 
 // Acción para Registrar Hotel Nuevo
-export async function registerHotelAction(data: any) {
+export async function registerHotelAction(data: RegisterHotelData) {
   const existing = await prisma.hotel.findUnique({ where: { adminEmail: data.adminEmail } });
   if (existing) throw new Error("El email ya se encuentra registrado.");
 
@@ -38,11 +47,11 @@ export async function registerHotelAction(data: any) {
 }
 
 // Acción para cargar la operación diaria del Auditor
-export async function logOperacionAction(data: any) {
+export async function logOperacionAction(data: DashboardFormData) {
   const cookieStore = await cookies();
   const hotelIdStr = cookieStore.get("hotelId")?.value;
   
-  if (!hotelIdStr) throw new Error("No hay sesión activa.");
+  if (!hotelIdStr) return { success: false, error: "No hay sesión activa." };
   const hotelId = parseInt(hotelIdStr);
 
   try {
@@ -62,7 +71,7 @@ export async function logOperacionAction(data: any) {
   } catch(e: any) {
     // Unique constraint failed validation
     if(e.code === 'P2002') return { error: "Ya se cargaron los datos de este hotel para la fecha actual." };
-    throw new Error("Error interno al guardar: " + e.message);
+    throw new Error("Error interno al guardar: " + (e as Error).message);
   }
 }
 
@@ -87,7 +96,7 @@ export async function getDashboardDataAction() {
   if (!hotel) return { success: false, error: "Hotel no encontrado" };
 
   return { 
-    success: true, 
+    success: true as const, 
     hotelName: hotel.nombre,
     rooms: hotel.habitaciones,
     operaciones: hotel.operaciones 

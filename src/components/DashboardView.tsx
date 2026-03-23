@@ -2,6 +2,7 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie } from 'recharts';
 import { ArrowUpRight, TrendingUp, AlertTriangle, Users } from 'lucide-react';
+import { OperacionDiaria, DashboardFormData } from '@/types';
 
 const mockDailyTrend = [
   { name: 'Lun', occ: 45, adr: 90000, revpar: 40500 },
@@ -21,8 +22,8 @@ const mockOrigins = [
 ];
 
 interface DashboardProps {
-  latestData: any;
-  history: any[];
+  latestData: DashboardFormData | null;
+  history: OperacionDiaria[];
   hotelRooms: number;
 }
 
@@ -124,7 +125,7 @@ export default function DashboardView({ latestData, history, hotelRooms }: Dashb
                 <Tooltip 
                   contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '0.5rem', color: '#fff' }}
                   itemStyle={{ color: '#818cf8', fontWeight: 'bold' }}
-                  formatter={(value: any) => [`$${value.toLocaleString()}`, 'RevPAR']}
+                  formatter={(value: any) => [`$${Number(value).toLocaleString()}`, 'RevPAR']}
                 />
                 <Line type="monotone" dataKey="revpar" stroke="#818cf8" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6, stroke: '#818cf8', strokeWidth: 2, fill: '#0f172a' }} />
               </LineChart>
